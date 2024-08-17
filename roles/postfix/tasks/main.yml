@@ -1,0 +1,20 @@
+---
+- name: Install postfix
+  ansible.builtin.dnf:
+    name: postfix
+    state: present
+
+- name: Update postfix configuration to use IPv4
+  ansible.builtin.lineinfile:
+    path: /etc/postfix/main.cf
+    regexp: ^inet_protocols
+    line: inet_protocols = ipv4
+  notify: Reload postfix.service
+
+- name: Enable and start postfix.service
+  ansible.builtin.systemd:
+    name: postfix.service
+    state: started
+    enabled: true
+    daemon_reload: true
+  ignore_errors: '{{ ansible_check_mode }}'

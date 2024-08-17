@@ -1,0 +1,17 @@
+---
+- name: Install nginx-informer script
+  ansible.builtin.template:
+    src: nginx-informer.sh
+    dest: /usr/local/sbin/nginx-informer.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Schedule nginx-informer script
+  ansible.builtin.template:
+    src: nginx-informer.cron
+    dest: /etc/cron.d/nginx-informer
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload crond.service

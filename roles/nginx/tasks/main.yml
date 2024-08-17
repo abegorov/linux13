@@ -1,0 +1,21 @@
+---
+- name: Install nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+
+- name: Configure firewalld for nginx
+  ansible.posix.firewalld:
+    zone: public
+    port: '80/tcp'
+    immediate: true
+    permanent: true
+    state: enabled
+
+- name: Start nginx.service
+  ansible.builtin.systemd:
+    name: nginx.service
+    state: started
+    enabled: true
+    daemon_reload: true
+  ignore_errors: '{{ ansible_check_mode }}'

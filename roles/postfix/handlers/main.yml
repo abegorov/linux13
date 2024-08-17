@@ -1,0 +1,5 @@
+- name: Reload postfix.service
+  ansible.builtin.systemd:
+    name: postfix.service
+    state: reloaded
+  ignore_errors: '{{ ansible_check_mode }}'

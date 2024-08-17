@@ -1,0 +1,13 @@
+---
+- name: Vagrant provision playbook
+  hosts: all
+  become: true
+  gather_facts: false
+
+  vars:
+    nginx_informer_email: molic19424@iteradev.com
+
+  roles:
+    - nginx
+    - postfix
+    - nginx-informer
